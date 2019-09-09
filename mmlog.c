@@ -16,21 +16,40 @@
  *
  * Environment Varibles:
  *  MM_LOGFILE_NUM: Number of log files to rotate. Default is 10.
- *  MM_LOGFILE: Name of the the log file. Default is "mmlog"
- *  MM_LOGSIZE: Max size of the log file. Default is 10.
+ *  MM_LOGFILE: Name of the log file. Default is "mmlog"
+ *  MM_LOGSIZE: Max size of one log file. Default is 10M.
  */
 int LogFileNum=10;
 char *LogFile0="mmlog";
 char **LogFile;
 FILE *LogFp=0, *LogFpX=0;
-long LogMaxSize=20000000L;
+long LogMaxSize=10000000L;
 char LogTimeStr[40];
+char *MyLogFile =0;
+
+/*
+ */
+void begin(char *msg, char *msg1){
+  if(!LogFpX)
+    LogFpX= fopen(MyLogFile, "w");
+  if(LogFpX){
+    fprintf(LogFpX, "Begin: %s %s\n", msg, msg1);
+    fflush(LogFpX);
+  }
+  puts(msg);
+}
 
 
 /*
  */
 void toEnd(int code, char *msg, char *msg1){
-  printf("[mmlog] Quit: %d - %s %s\n", code, msg, msg1);
+  if(!LogFpX)
+    LogFpX= fopen(MyLogFile, "a");
+  if(LogFpX){
+    fprintf(LogFpX, "Quit: %d - %s %s\n", code, msg, msg1);
+    fclose(LogFpX);
+  }
+  printf("Quit: %d - %s %s\n", code, msg, msg1);
   exit(code);
 }
 
@@ -54,6 +73,15 @@ void init(){
   p= getenv("MM_LOGSIZE");
   if(p!=0)
     LogMaxSize= atol(p); 
+  
+  p= getenv("MM_MYLOGFILE");
+  if(p!=0){
+    MyLogFile=p;
+  } else{
+    MyLogFile= malloc(2048);
+    getcwd(MyLogFile, 2030);
+    strcat(MyLogFile, "/mmlog.trc");
+  }
   
   n1= strlen(LogFile0)+10;
   for(i=0; i<LogFileNum; i++){
@@ -146,14 +174,15 @@ int main( int argc, char *argv[] ){
   
   init();
   
+  begin("mmlog started @", getTimeString());
   if(argc>2){
-    printf("[mmlog] Syntax:\n %s [<log-message>]\n", argv[0]);
+    printf("Syntax:\n %s [<log-message>]\n", argv[0]);
     toEnd(-1, "arguments number must not greater than 2 @", getTimeString());
   }
   
   if(argc==2){
     logmsg= argv[1];
-    printf("[mmlog] Got message: %s\n", logmsg);
+    printf("Got message: %s\n", logmsg);
     
     if( chkfilestat() > LogMaxSize)
       rotate();
@@ -162,14 +191,14 @@ int main( int argc, char *argv[] ){
       appendMsg(logmsg);
   
   } else{
-    printf("[mmlog] Read message from stdio\n");
+    printf("Read message from stdio\n");
     buf= malloc(65536);
    
     do{
       logmsg= fgets(buf, 65536, stdin);
       if(!logmsg)
         break;
-      printf("[mmlog] Got message: %s\n", logmsg);
+      printf("Got message: %s\n", logmsg);
       
       n= strlen(logmsg);
       if(n>0 && logmsg[n-1]=='\n')
