@@ -1,6 +1,6 @@
 # mmlog
 
-Log rotation tool for shell scripts or apps which generate logs to standard output or error. "mmlog" is an useful tool if you do not want the logging data saturates your disk.
+"mmlog" is a log rotation tool for shell scripts, or apps which generate logging data to standard output or standard error. "mmlog" is an useful tool to prevent logging data to saturates user's disk.
 
 ## Build mmlog for your system
 By default, a "mmlog" for Linux X64 is provided in the "build" folder. You can build "mmlog" for your own platform with following command:
