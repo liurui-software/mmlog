@@ -1,0 +1,1 @@
+/usr/bin/cc     CMakeFiles/mmlog.dir/mmlog.c.o  -o mmlog 
