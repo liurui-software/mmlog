@@ -25,30 +25,11 @@ char **LogFile;
 FILE *LogFp=0, *LogFpX=0;
 long LogMaxSize=10000000L;
 char LogTimeStr[40];
-char *MyLogFile =0;
-
-/*
- */
-void begin(char *msg, char *msg1){
-  if(!LogFpX)
-    LogFpX= fopen(MyLogFile, "w");
-  if(LogFpX){
-    fprintf(LogFpX, "Begin: %s %s\n", msg, msg1);
-    fflush(LogFpX);
-  }
-  puts(msg);
-}
 
 
 /*
  */
 void toEnd(int code, char *msg, char *msg1){
-  if(!LogFpX)
-    LogFpX= fopen(MyLogFile, "a");
-  if(LogFpX){
-    fprintf(LogFpX, "Quit: %d - %s %s\n", code, msg, msg1);
-    fclose(LogFpX);
-  }
   printf("Quit: %d - %s %s\n", code, msg, msg1);
   exit(code);
 }
@@ -73,15 +54,6 @@ void init(){
   p= getenv("MM_LOGSIZE");
   if(p!=0)
     LogMaxSize= atol(p); 
-  
-  p= getenv("MM_MYLOGFILE");
-  if(p!=0){
-    MyLogFile=p;
-  } else{
-    MyLogFile= malloc(2048);
-    getcwd(MyLogFile, 2030);
-    strcat(MyLogFile, "/mmlog.trc");
-  }
   
   n1= strlen(LogFile0)+10;
   for(i=0; i<LogFileNum; i++){
@@ -174,7 +146,6 @@ int main( int argc, char *argv[] ){
   
   init();
   
-  begin("mmlog started @", getTimeString());
   if(argc>2){
     printf("Syntax:\n %s [<log-message>]\n", argv[0]);
     toEnd(-1, "arguments number must not greater than 2 @", getTimeString());
