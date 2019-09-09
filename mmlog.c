@@ -19,11 +19,15 @@
  *  MM_LOGFILE: Name of the log file. Default is "mmlog"
  *  MM_LOGSIZE: Max size of one log file. Default is 10M.
  */
-int LogFileNum=10;
-char *LogFile0="mmlog";
+#define DEFAULT_FILE_NUM 10
+#define DEFAULT_FILE_NAME "mmlog"
+#define DEFAULT_FILE_SIZE 10000000L
+
+int LogFileNum=DEFAULT_FILE_NUM;
+char *LogFile0=DEFAULT_FILE_NAME;
 char **LogFile;
 FILE *LogFp=0, *LogFpX=0;
-long LogMaxSize=10000000L;
+long LogMaxSize=DEFAULT_FILE_SIZE;
 char LogTimeStr[40];
 
 
