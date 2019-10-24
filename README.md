@@ -1,6 +1,8 @@
 # mmlog
 
-"mmlog" is a log rotation tool for shell scripts, or apps which generate logging data to standard output or standard error. "mmlog" is an useful tool to prevent logging data to saturates user's disk.
+"mmlog" is a simple log rotation tool for shell scripts, or apps which generate logging data to standard output or standard error. "mmlog" is an useful tool to prevent logging data to saturates user's disk.
+
+There is built-in tool named "logrotate" in some systems. But "logrotate" costs too much CPU and cannot control the maximum size of the log file. "mmlog" is much more lightweight, esier configuration, and with more good features for shell scripts, or apps which generate logging data to standard output or standard error.  
 
 ## Build mmlog for your system
 By default, a "mmlog" for Linux X64 is provided in the "build" folder. You can build "mmlog" for your own platform with following command:
@@ -28,10 +30,11 @@ MM_LOGSIZE: Max size of one log file. Default is 10M.
 export MM_LOGFILE=myapp
 ./myapp | ./mmlog
 ```
-1) Rotate logging data from standard output and error, set logfile name and size, run in background...
+2) Rotate logging data from standard output and error, set logfile name and size, run in background...
 ```
 export MM_LOGFILE=myapp
 export MM_LOGSIZE=1000000
 nohup ./myapp 2>&1 | ./mmlog >mmlog.out 2>&1 &
 ```
+
 
