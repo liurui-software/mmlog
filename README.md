@@ -5,12 +5,12 @@
 There is built-in tool named "logrotate" in some systems. But "logrotate" costs too much CPU and cannot control the maximum size of the log file. "mmlog" is much more lightweight, esier configuration, and with more good features for shell scripts, or apps which generate logging data to standard output or standard error.  
 
 ## Build mmlog for your system
-By default, a "mmlog" for Linux X64 is provided in the "build" folder. You can build "mmlog" for your own platform with following command:
+"mmlog" binaries for 7 platforms are provided in the "build" folder. You can also build "mmlog" for your own platforms with following command:
 ```
 make
 ```
 
-## Syntax:
+## Syntax to use mmlog:
 ```
 <cmd> | mmlog
 Or:
