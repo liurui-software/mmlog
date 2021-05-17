@@ -25,16 +25,22 @@ MM_LOGSIZE: Max size of one log file. Default is 10M.
 ```
 
 ## Samples of usage
-1) Rotate logging data from standard output, set logfile name...
-```
-export MM_LOGFILE=myapp
-./myapp | ./mmlog
-```
-2) Rotate logging data from standard output and error, set logfile name and size, run in background...
+1) Rotate logging data from standard output and error, set logfile name and size to rotate, run in background...
 ```
 export MM_LOGFILE=myapp
 export MM_LOGSIZE=1000000
-nohup ./myapp 2>&1 | ./mmlog >mmlog.out 2>&1 &
+nohup ./myapp 2>&1 | ./mmlog &
 ```
 
+2) Rotate your Tomcat log 
+
+For example your Tomcat installed on Linux/x64 and is located in directory "TOMCAT_HOME=/opt/apache-tomcat-9.0.44".
+Down `mmlog` for Linux from page: https://github.com/liurui-1/mmlog/blob/master/build/linux.amd64/mmlog and copy to directory "$TOMCAT_HOME/bin". Use following command to start Tomcat. Then you make your Tomcat log (original named catalina.out and is now named tomcat.log*) rotated.
+```
+export TOMCAT_HOME=/opt/apache-tomcat-9.0.44
+export CATALINA_OUT_CMD="nohup $TOMCAT_HOME/bin/mmlog"
+export MM_LOGFILE=$TOMCAT_HOME/logs/tomcat
+export MM_LOGSIZE=1000000
+$TOMCAT_HOME/bin/startup.sh
+```
 
