@@ -1,3 +1,0 @@
-/root/cpath/mmlog/CMakeFiles/edit_cache.dir
-/root/cpath/mmlog/CMakeFiles/rebuild_cache.dir
-/root/cpath/mmlog/CMakeFiles/mmlog.dir

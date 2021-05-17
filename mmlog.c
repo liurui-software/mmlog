@@ -34,7 +34,7 @@ char LogTimeStr[40];
 /*
  */
 void toEnd(int code, char *msg, char *msg1){
-  printf("Quit: %d - %s %s\n", code, msg, msg1);
+  fprintf(stderr, "Quit: %d - %s %s\n", code, msg, msg1);
   exit(code);
 }
 
@@ -151,13 +151,13 @@ int main( int argc, char *argv[] ){
   init();
   
   if(argc>2){
-    printf("Syntax:\n %s [<log-message>]\n", argv[0]);
+    fprintf(stderr, "Syntax:\n %s [<log-message>]\n", argv[0]);
     toEnd(-1, "arguments number must not greater than 2 @", getTimeString());
   }
   
   if(argc==2){
     logmsg= argv[1];
-    printf("Got message: %s\n", logmsg);
+    /*printf("Got message: %s\n", logmsg);*/
     
     if( chkfilestat() > LogMaxSize)
       rotate();
@@ -166,14 +166,14 @@ int main( int argc, char *argv[] ){
       appendMsg(logmsg);
   
   } else{
-    printf("Read message from stdio\n");
+    /*printf("Read message from stdio\n");*/
     buf= malloc(65536);
    
     do{
       logmsg= fgets(buf, 65536, stdin);
       if(!logmsg)
         break;
-      printf("Got message: %s\n", logmsg);
+      /*printf("Got message: %s\n", logmsg);*/
       
       n= strlen(logmsg);
       if(n>0 && logmsg[n-1]=='\n')
@@ -191,3 +191,4 @@ int main( int argc, char *argv[] ){
   toClose();
   toEnd(0, "Exit normally @", getTimeString());
 }
+
