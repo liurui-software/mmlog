@@ -35,7 +35,7 @@ nohup ./myapp 2>&1 | ./mmlog &
 2) Rotate your Tomcat log 
 
 For example your Tomcat installed on Linux/x64 and is located in directory "TOMCAT_HOME=/opt/apache-tomcat-9.0.44".
-Down `mmlog` for Linux from page: https://github.com/liurui-1/mmlog/blob/master/build/linux.amd64/mmlog and copy to directory "$TOMCAT_HOME/bin". Use following command to start Tomcat. Then you make your Tomcat log (originally named catalina.out which can grow to unlimited size and it is now named tomcat.log* as 10 rotated log files) rotated.
+Down `mmlog` for Linux from page: https://github.com/liurui-1/mmlog/blob/master/build/linux.amd64/mmlog and copy to directory "$TOMCAT_HOME/bin". Use following command to start Tomcat. Then you make your Tomcat log rotated. The major Tomcat log file originally named `catalina.out` which can grow up to unlimited size，is now named tomcat#.log as 10 rotated log files up to 1M size).
 ```
 export TOMCAT_HOME=/opt/apache-tomcat-9.0.44
 export CATALINA_OUT_CMD="nohup $TOMCAT_HOME/bin/mmlog"
