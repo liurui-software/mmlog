@@ -7,6 +7,7 @@ There is built-in tool named "logrotate" in some systems. But "logrotate" costs 
 ## Build mmlog for your system
 "mmlog" binaries for 7 platforms are provided in the "build" folder. You can also build "mmlog" for your own platforms with following command:
 ```
+cmake .
 make
 ```
 
@@ -20,8 +21,9 @@ Or:
 ## Environment Varibles:
 ```
 MM_LOGFILE_NUM: Number of log files to rotate. Default is 10.
-MM_LOGFILE: Name of the log file. Default is "mmlog"
+MM_LOGFILE: Name of the log file including file path. Default is "mmlog"
 MM_LOGSIZE: Max size of one log file. Default is 10M.
+MM_LOG_PREFIX: Prefix of log record. Default is no prefix, "timestamp" means time stamp.
 ```
 
 ## Samples of usage
